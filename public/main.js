@@ -32,13 +32,13 @@ class Chat {
       window.location.hostname === "localhost" ||
       window.location.hostname === "127.0.0.1"
     ) {
-      this.endpoint = `http://localhost:8787/${this.model}`;
+      this.updateEndpoint(this.model);
       console.log(
         "Modo de desenvolvimento: Endpoint definido para",
         this.endpoint
       );
     } else {
-      this.endpoint = `/${this.model}`;
+      this.updateEndpoint(this.model);
       console.log("Modo de produção: Endpoint definido para", this.endpoint);
     }
     this.attention = 0;
@@ -52,6 +52,23 @@ class Chat {
 
     // Eventos
     this.initEventListeners();
+  }
+
+  updateEndpoint(model) {
+    // Configurar o endpoint para desenvolvimento ou produção
+    if (
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
+    ) {
+      this.endpoint = `http://localhost:8787/${model}`;
+      console.log(
+        "Modo de desenvolvimento: Endpoint definido para",
+        this.endpoint
+      );
+    } else {
+      this.endpoint = `/${model}`;
+      console.log("Modo de produção: Endpoint definido para", this.endpoint);
+    }
   }
 
   /**
@@ -137,6 +154,18 @@ class Chat {
     return selected ? selected.value : "enter";
   }
 
+  // Função auxiliar para converter imagem em base64
+  readImageAsBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result.split(",")[1]); // Remover a metadata base64
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
   /**
    * Envia o prompt para a API de IA.
    */
@@ -160,6 +189,27 @@ class Chat {
 
     // Atualizar interface
     this.addPromptToMain(prompt);
+
+    // Verificar se uma imagem foi carregada
+    let imageData = null;
+    const imageInput = document.getElementById("imageInput");
+    if (imageInput && imageInput.files.length > 0) {
+      const file = imageInput.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64Data = reader.result.split(",")[1]; // Pega a string base64
+        const binaryString = atob(base64Data);
+        const uint8Array = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          uint8Array[i] = binaryString.charCodeAt(i); // Converte para um array de inteiros
+        }
+        imageData = Array.from(uint8Array); // Transforma em array de inteiros para enviar
+      };
+      reader.readAsDataURL(file); // Converte a imagem em base64
+
+      imageInput.value = "";
+    }
+
     this.sendBtn.innerText = "Stop..";
 
     try {
@@ -175,8 +225,15 @@ class Chat {
           "<br>Acordo aceito. Enviando sua mensagem...";
       }
 
+      // Limpar o campo de texto do prompt
+      this.promptEl.value = "";
+
       // Enviar o prompt do usuário
-      await this.stream(prompt);
+      if (imageData) {
+        await this.stream(prompt, imageData);
+      } else {
+        await this.stream(prompt);
+      }
     } catch (error) {
       console.error("Erro ao enviar o prompt:", error);
       this.onError(error.message);
@@ -218,13 +275,19 @@ class Chat {
   /**
    * Envia o prompt para a API com suporte a streaming.
    * @param {string} prompt
+   * @param {string|null} imageData - Base64 da imagem, se houver.
    */
-  async stream(prompt) {
+  async stream(prompt, imageData = null) {
     this.result = "";
     this.body = {
       stream: true,
       messages: [{ role: "user", content: prompt }],
     };
+    // Se houver imagem, adicioná-la ao body
+    if (imageData) {
+      this.body.image = imageData; // Apenas a string base64, conforme requerido
+      this.body.temperature = 0;
+    }
     this.controller = new AbortController();
     const signal = this.controller.signal;
 
@@ -496,15 +559,15 @@ class Chat {
     this.model = model;
     this.messageEl.innerHTML = `Modelo selecionado: ${this.model} @${this.attention}`;
 
-    // Atualizar o endpoint com o novo modelo
-    if (
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
-    ) {
-      this.endpoint = `http://localhost:8787/${this.model}`;
+    // Exibir o campo de upload de imagem se o modelo aceitar imagens
+    if (this.model === "@cf/meta/llama-3.2-11b-vision-instruct") {
+      document.getElementById("imageUploadContainer").style.display = "block";
     } else {
-      this.endpoint = `/${this.model}`;
+      document.getElementById("imageUploadContainer").style.display = "none";
     }
+
+    // Atualizar o endpoint com o novo modelo
+    this.updateEndpoint(this.model);
 
     console.log("Modelo selecionado:", this.model);
     console.log("Endpoint atualizado para:", this.endpoint);
