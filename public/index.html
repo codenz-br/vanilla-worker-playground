@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vanilla AI Playground</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <div id="heading">
+            Vanilla AI-Playground<br>
+            <span id="message">Para Cloudflare Worker-AI (20240408c)</span>
+        </div>
+        <div id="menu">
+            <button id="voiceBtn" title="Entrada por voz">🎤</button>
+            <button id="exportBtn" title="Exportar conversa">Exportar</button>
+            <button id="modelsBtn" title="Listar modelos de IA">Modelos</button>
+            <button id="sendBtn" accesskey="s" title="[Alt-S] Enviar prompt"><b>S</b>end</button>
+        </div>
+    </header>
+
+    <div id="content">
+        <div id="left">
+            <div id="main">
+                <p class="desktop">
+                    <b>Tecla de envio:</b>
+                    <label>
+                        <input type="radio" name="submitkey" value="enter" checked> [Enter]
+                    </label>
+                    <label>
+                        <input type="radio" name="submitkey" value="ctrl"> [Ctrl-Enter]
+                    </label>
+                </p>
+                <p>
+                    <b>[Ctrl-P]</b> para imprimir<br>
+                    <b>[F5]</b> para nova conversa
+                </p>
+            </div>
+        </div>
+        <div id="right">
+            <textarea id="prompt" placeholder="Insira seu prompt aqui.."></textarea>
+            <div id="list" class="hidden">
+                <b>Modelos de IA</b>:
+                <span class="attention">
+                    <b>Atenção:</b>
+                    <input id="attention" type="number" value="0" min="0" style="width:30px">
+                    diálogos
+                </span>
+                <ul id="modelList">
+                    <li data-model="@cf/meta/llama-3.2-11b-vision-instruct">@cf/meta/llama-3.2-11b-vision-instruct</li>
+                    <li data-model="@cf/google/gemma-2b-it-lora">@cf/google/gemma-2b-it-lora</li>
+                    <li data-model="@cf/google/gemma-7b-it-lora">@cf/google/gemma-7b-it-lora</li>
+                    <li data-model="@cf/meta-llama/llama-2-7b-chat-hf-lora">@cf/meta-llama/llama-2-7b-chat-hf-lora</li>
+                    <li data-model="@cf/meta/llama-2-7b-chat-fp16">@cf/meta/llama-2-7b-chat-fp16</li>
+                    <li data-model="@cf/meta/llama-2-7b-chat-int8">@cf/meta/llama-2-7b-chat-int8</li>
+                    <li data-model="@cf/microsoft/phi-2">@cf/microsoft/phi-2</li>
+                    <li data-model="@cf/mistral/mistral-7b-instruct-v0.1">@cf/mistral/mistral-7b-instruct-v0.1</li>
+                    <li data-model="@cf/mistral/mistral-7b-instruct-v0.1-vllm">@cf/mistral/mistral-7b-instruct-v0.1-vllm
+                    </li>
+                    <li data-model="@cf/mistral/mistral-7b-instruct-v0.2-lora">@cf/mistral/mistral-7b-instruct-v0.2-lora
+                    </li>
+                    <li data-model="@cf/openchat/openchat-3.5-0106">@cf/openchat/openchat-3.5-0106</li>
+                    <li data-model="@cf/qwen/qwen1.5-14b-chat-awq">@cf/qwen/qwen1.5-14b-chat-awq</li>
+                    <li data-model="@cf/qwen/qwen1.5-7b-chat-awq">@cf/qwen/qwen1.5-7b-chat-awq</li>
+                    <li data-model="@cf/tiiuae/falcon-7b-instruct">@cf/tiiuae/falcon-7b-instruct</li>
+                    <li data-model="@cf/tinyllama/tinyllama-1.1b-chat-v1.0">@cf/tinyllama/tinyllama-1.1b-chat-v1.0</li>
+                    <li data-model="@hf/google/gemma-7b-it">@hf/google/gemma-7b-it</li>
+                    <li data-model="@hf/mistral/mistral-7b-instruct-v0.2">@hf/mistral/mistral-7b-instruct-v0.2</li>
+                    <li data-model="@hf/nousresearch/hermes-2-pro-mistral-7b">@hf/nousresearch/hermes-2-pro-mistral-7b
+                    </li>
+                    <li data-model="@hf/thebloke/llama-2-13b-chat-awq">@hf/thebloke/llama-2-13b-chat-awq</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+    <script src="bundle.js"></script>
+</body>
+
+</html>

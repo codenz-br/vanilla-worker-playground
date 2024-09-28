@@ -1,0 +1,192 @@
+/* styles.css */
+
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Roboto, Lato, Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+header {
+  background: linear-gradient(to bottom right, #06c, #fc0);
+  color: #eee;
+  padding: 12px;
+  font-size: 20px;
+  height: 45px;
+  font-family: "Open Sans", sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#heading {
+  display: flex;
+  flex-direction: column;
+}
+
+#message {
+  color: yellow;
+  font-size: 10px;
+}
+
+#menu button {
+  font-family: Lato, Arial, sans-serif;
+  border-radius: 3px;
+  border: none;
+  padding: 3px 6px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+#menu button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+#content {
+  display: flex;
+  height: calc(100vh - 45px);
+  margin: 8px;
+  color: #112;
+  background-color: #bed;
+}
+
+#left {
+  flex: 3;
+  border: 1px solid grey;
+  padding: 6px;
+  overflow: auto;
+}
+
+#right {
+  flex: 2;
+  border: 1px solid grey;
+  padding: 6px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#main {
+  padding: 12px;
+  max-width: 960px;
+}
+
+.desktop {
+  display: block;
+}
+
+#prompt {
+  height: 190px;
+  padding: 8px;
+  overflow: auto;
+  resize: vertical;
+  width: 96%;
+  margin: 3px auto;
+  background-color: #eee;
+}
+
+#list {
+  border-top: 1px solid grey;
+  padding-top: 6px;
+  margin-top: 6px;
+}
+
+#list ul {
+  list-style-type: none;
+}
+
+#list li {
+  padding: 4px;
+  cursor: pointer;
+}
+
+#list li:hover {
+  background-color: #ddd;
+}
+
+.prompt {
+  color: #322;
+  background-color: #ccc;
+  padding: 6px;
+}
+
+.stamp {
+  color: teal;
+  font-size: 70%;
+}
+
+.hidden {
+  display: none;
+}
+
+.attention {
+  float: right;
+  font-size: 80%;
+  color: teal;
+}
+
+/* Media Queries */
+
+@media print {
+  #menu,
+  #right {
+    display: none !important;
+  }
+  #left {
+    position: relative;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    border: none;
+    height: auto;
+    overflow: hidden;
+  }
+  .prompt {
+    border-bottom: 1px solid grey;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .desktop {
+    display: none !important;
+  }
+  #list {
+    position: absolute;
+    height: calc(100vh - 160px);
+    width: 100%;
+    bottom: 58px;
+    background-color: #eee;
+  }
+  #right {
+    position: absolute;
+    width: auto;
+    height: auto;
+    bottom: 10px;
+    left: 8px;
+    right: 70px;
+  }
+  #prompt {
+    height: 1.2em;
+    padding: 10px;
+    overflow: auto;
+  }
+  #sendBtn {
+    position: absolute;
+    height: 36px;
+    bottom: 12px;
+    right: 12px;
+  }
+  #left {
+    width: 97%;
+    height: calc(100vh - 154px);
+  }
+}

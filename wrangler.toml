@@ -1,0 +1,14 @@
+name = "vanilla-worker-playground"
+main = "worker/worker.js"
+type = "javascript"
+
+account_id = "eed1dcb5bc6b2cd005ee559705499c8e"
+workers_dev = true
+compatibility_date = "2024-04-08"
+
+[env.production]
+
+[vars]
+CLOUDFLARE_AC_ID = "eed1dcb5bc6b2cd005ee559705499c8e"
+CLOUDFLARE_API_KEY = "encrypt"
+CLOUDFLARE_GATEWAY_ID = "hello-ai"
