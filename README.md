@@ -5,7 +5,6 @@
 ## Table of Contents
 
 - [Features](#features)
-- [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Deployment](#deployment)
@@ -27,10 +26,6 @@
 - **Responsive Design**: Optimized for both desktop and mobile devices.
 - **Clipboard Integration**: Easily copy conversation snippets to your clipboard.
 - **Speech Synthesis**: Listen to AI responses using text-to-speech functionality.
-
-## Demo
-
-!https://github.com/seu-usuario/vanilla-worker-playground/blob/main/demo.gif
 
 ## Installation
 
@@ -77,8 +72,6 @@
 To start the development server with live reloading:
 
 ```bash
-bash
-Copiar código
 npm run start
 
 ```
@@ -91,8 +84,6 @@ npm run start
 To build the project for production:
 
 ```bash
-bash
-Copiar código
 npm run build
 
 ```
@@ -104,8 +95,6 @@ This will bundle and optimize your JavaScript files into the `public` directory.
 After building, you can serve the `public` directory using any static server. For example:
 
 ```bash
-bash
-Copiar código
 npx live-server public/
 
 ```
