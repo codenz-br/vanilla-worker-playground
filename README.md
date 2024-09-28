@@ -57,8 +57,6 @@
    Create a `.env` file in the root directory and add your Cloudflare credentials:
 
    ```
-   env
-   Copiar código
    CLOUDFLARE_AC_ID=your_account_id
    CLOUDFLARE_API_KEY=your_api_key
    CLOUDFLARE_GATEWAY_ID=your_gateway_id
@@ -138,6 +136,12 @@ The project uses **Cloudflare Workers** for backend functionalities. Follow thes
    ```
 
    This runs `wrangler dev`, allowing you to interact with your Worker in a development environment.
+
+   Run frontend with `live-server` in `public` aplication:
+
+   ```bash
+   npm run start
+   ```
 
 ## Project Structure
 
